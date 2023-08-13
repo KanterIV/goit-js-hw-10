@@ -9,12 +9,28 @@ function fetchBreeds() {
     },
   }).then(response => {
     if (!response.ok) {
-      throw new Error(response.statusText);
+      throw new Error(response.status);
     }
+
     return response.json();
   });
 }
 
-function fetchCatByBreed(breedId) {}
+function fetchCatByBreed(catId) {
+  const params = new URLSearchParams({
+    breed_ids: catId,
+  });
+  return fetch(`${SEARCH_URL}?${params}`, {
+    headers: {
+      'x-api-key': API_KEY,
+    },
+  }).then(response => {
+    if (!response.ok) {
+      throw new Error(response.status);
+    }
+
+    return response.json();
+  });
+}
 
 export { fetchBreeds, fetchCatByBreed };
